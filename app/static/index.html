@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Elasticsearch</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, button { margin: 5px; padding: 5px; }
+        #results { margin-top: 20px; }
+        .document { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Local Elasticsearch</h1>
+    <input type="text" id="searchQuery" placeholder="Search documents...">
+    <button onclick="search()">Search</button>
+    <button onclick="loadAll()">Load All Documents</button>
+    <div id="results"></div>
+
+    <h3>Document Status</h3>
+    <select id="docSelect"></select>
+    <button onclick="pollStatus()">Poll Status</button>
+    <div id="docStatus"></div>
+
+    <h2>Add Document</h2>
+    <input type="text" id="docId" placeholder="ID">
+    <input type="text" id="docTitle" placeholder="Title">
+    <textarea id="docContent" placeholder="Content"></textarea>
+    <button onclick="addDocument()">Add Document</button>
+
+    <h2>Upload Document</h2>
+    <input type="file" id="fileInput" accept=".txt">
+    <button onclick="uploadDocument()">Upload File</button>
+
+    <h2>Queue Stats</h2>
+    <button onclick="loadQueueStats()">Load Queue Stats</button>
+    <div id="queueStats"></div>
+
+    <h2>Raw Data (Debugging)</h2>
+    <button onclick="loadRawDocuments()">Load Raw Documents</button>
+    <button onclick="loadRawExtractedText()">Load Raw Extracted Text</button>
+    <button onclick="loadRawInvertedIndex()">Load Raw Inverted Index</button>
+    <div id="rawResults"></div>
+
+    <h2>API Curl Examples</h2>
+    <h3>Add Document</h3>
+    <pre>curl -X POST "http://localhost:8080/documents" -H "Content-Type: application/json" -d '{"id": "1", "title": "Sample Title", "content": "Sample content here"}'</pre>
+
+    <h3>Get Documents</h3>
+    <pre>curl "http://localhost:8080/documents"</pre>
+    <pre>curl "http://localhost:8080/documents?q=hello&limit=5"</pre>
+
+    <h3>Search Documents</h3>
+    <pre>curl "http://localhost:8080/search?q=hello"</pre>
+
+    <h3>Raw Data</h3>
+    <pre>curl "http://localhost:8080/raw/documents"</pre>
+    <pre>curl "http://localhost:8080/raw/extracted_text"</pre>
+    <pre>curl "http://localhost:8080/raw/inverted_index"</pre>
+
+    <h3>Health Check</h3>
+    <pre>curl "http://localhost:8080/health"</pre>
+
+    <script>
+        async function search() {
+            const q = document.getElementById('searchQuery').value;
+            const response = await fetch(`/search?q=${encodeURIComponent(q)}`);
+            const data = await response.json();
+            displayResults(data.results);
+        }
+
+        async function loadAll() {
+            const response = await fetch('/documents');
+            const data = await response.json();
+            displayResults(data.results);
+        }
+
+        async function addDocument() {
+            const id = document.getElementById('docId').value;
+            const title = document.getElementById('docTitle').value;
+            const content = document.getElementById('docContent').value;
+            await fetch('/documents', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, title, content })
+            });
+            alert('Document queued!');
+        }
+
+        async function uploadDocument() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('Please select a file');
+                return;
+            }
+            const formData = new FormData();
+            formData.append('file', file);
+            await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            alert('File uploaded and queued!');
+        }
+
+        async function loadQueueStats() {
+            const response = await fetch('/queue/stats');
+            const data = await response.json();
+            displayQueueStats(data);
+        }
+
+        function displayQueueStats(stats) {
+            const statsDiv = document.getElementById('queueStats');
+            let html = '<ul>';
+            for (const [queue, info] of Object.entries(stats)) {
+                html += `<li>${queue}: ${info.message_count || 0} messages, ${info.consumer_count || 0} consumers</li>`;
+            }
+            html += '</ul>';
+            statsDiv.innerHTML = html;
+        }
+
+        async function pollStatus() {
+            const docId = document.getElementById('docSelect').value;
+            if (!docId) {
+                alert('Select a document');
+                return;
+            }
+            const response = await fetch(`/documents/${docId}/status`);
+            if (response.ok) {
+                const status = await response.json();
+                displayDocStatus(status);
+            } else {
+                document.getElementById('docStatus').innerHTML = 'Document not found';
+            }
+        }
+
+        function displayDocStatus(status) {
+            const statusDiv = document.getElementById('docStatus');
+            statusDiv.innerHTML = `
+                <p>ID: ${status.id}</p>
+                <p>Title: ${status.title}</p>
+                <p>Status: <strong>${status.status}</strong></p>
+                <p>Version: ${status.version}</p>
+                <p>Terms Count: ${status.terms_count}</p>
+                <p>Created: ${status.created_at}</p>
+                <p>Updated: ${status.updated_at}</p>
+            `;
+        }
+
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('results');
+            const docSelect = document.getElementById('docSelect');
+            resultsDiv.innerHTML = '';
+            docSelect.innerHTML = '<option value="">Select a document</option>';
+            results.forEach(doc => {
+                const div = document.createElement('div');
+                div.className = 'document';
+                const scoreText = doc.score !== undefined ? `<p>Score: ${doc.score}</p>` : `<p>Status: ${doc.status}</p>`;
+                div.innerHTML = `<h3>${doc.title}</h3><p>ID: ${doc.id}</p>${scoreText}<p>${doc.content}</p>`;
+                resultsDiv.appendChild(div);
+                const option = document.createElement('option');
+                option.value = doc.id;
+                option.text = `${doc.title} (${doc.status || 'searched'})`;
+                docSelect.appendChild(option);
+            });
+        }
+
+        async function loadRawDocuments() {
+            const response = await fetch('/raw/documents');
+            const data = await response.json();
+            displayRawResults(data.data, 'Documents');
+        }
+
+        async function loadRawExtractedText() {
+            const response = await fetch('/raw/extracted_text');
+            const data = await response.json();
+            displayRawResults(data.data, 'Extracted Text');
+        }
+
+        async function loadRawInvertedIndex() {
+            const response = await fetch('/raw/inverted_index');
+            const data = await response.json();
+            displayRawResults(data.data, 'Inverted Index');
+        }
+
+        function displayRawResults(data, title) {
+            const rawDiv = document.getElementById('rawResults');
+            rawDiv.innerHTML = `<h3>Raw ${title}</h3>`;
+            const pre = document.createElement('pre');
+            pre.textContent = JSON.stringify(data, null, 2);
+            rawDiv.appendChild(pre);
+        }
+
+        // Load all on page load
+        window.onload = loadAll;
+    </script>
+</body>
+</html>

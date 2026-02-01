@@ -1,0 +1,3 @@
+Goal is to build a *personalized job tracker* with custom options such as *resume version per application, Kanban board style application tracker*, and *ability to set targets for applying jobs*. <br>This would be helpful as a personalized tracker instead of maintaining excel sheets which don't support these features. A few online solutions like *simplify, LinkedIn* help but don't provide the above custom options, as they just tell jobs applied to.
+
+`I want to be able to attach resumes for each job I applied to so that I can preview or download it later. Add the resume either manually or the generated resume directly while adding application. find and implement the best way to save these files`

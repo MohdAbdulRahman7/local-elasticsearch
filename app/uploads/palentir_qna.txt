@@ -1,0 +1,41 @@
+Q1) If you could solve any problem that impacts your daily life, what would it be? Why is this problem important? What would be the initial steps you would take to solve this problem? You can choose a problem that impacted you or someone in your life. (Word limit: 200-400 words. Response must be written in English.)✱
+
+ANSWER: 
+Growing up in Saudi Arabia, I experienced firsthand the challenges of healthcare accessibility. While general healthcare was affordable and accessible, managing severe health complications like cancer, heart disease, and neurological disorders posed significant financial burdens for many middle-class families, including mine. This often compelled families to seek more affordable care back in their home countries, such as India.
+
+Upon moving to India for my undergraduate studies, I discovered underlying issues within the healthcare system, including widespread misinformation about medical treatments, a general lack of medication knowledge, and the dangerous consequences of their misuse. I also encountered prevalent corruption and inflated costs, critical issues that remained hidden from public scrutiny.
+
+Furthering my education in Canada for my postgraduate studies, I was introduced to yet another aspect of healthcare inefficiency—extended wait times and exorbitant medical costs that could lead to significant personal debt. It appeared that healthcare, much like education, had succumbed to commercialization, a situation I often discuss with a mix of humor and serious concern.
+
+Driven by these experiences across three continents, I was motivated to leverage my Computer Science background to develop "DrugPulse," a software platform designed to recommend medications based on user-described symptoms and medical conditions. DrugPulse utilizes unstructured data from global patient reviews and ratings, offering valuable insights to not only consumers but also doctors and pharmaceutical developers regarding the efficacy of drugs and potential drug combinations.
+
+The innovation was well-received in Ontario, recognized as a significant advancement towards more informed and personalized healthcare. Encouraged by this success, I am committed to expanding this initiative through several key steps:
+
+1. Expand data Collection: By integrating a broader range of data from global sources to cover a wider array of conditions, enhancing its utility and accuracy.
+
+2. Increase user engagement: I plan to introduce interactive features that encourage users to share their experiences and outcomes, fostering a supportive community of informed individuals.
+
+3. Incorporate AI for Better Predictions: Implementing advanced AI algorithms will improve the precision of drug recommendations, tailoring them to individual patterns and needs.
+
+4. Partner with Healthcare Providers: Collaborating with hospitals and clinics will facilitate the integration of DrugPulse into existing medical frameworks, aiding in prescription processes and treatment plans.
+
+5. Regulatory Approval and compliance: Ensuring compliance with local and international health regulations and data protection laws is crucial for maintaining credibility and legal integrity.
+
+6. Feedback Mechanism: Establishing a robust system for user and professional feedback will enable continuous improvement and adaptation of the software.
+
+For more information on my work and details about DrugPulse, please visit [https://www.mohdabdulrahman.com/pages/projects/drugpulse].
+
+Through these measures, I aim to address global healthcare challenges, making medical care not only more accessible but also adaptable to the needs of individuals worldwide, regardless of their geographic or economic circumstances.
+
+Q2) The lessons we take from obstacles we encounter can be fundamental to later success. Share a time when you faced a challenge or setback, how did you approach it? How did it impact you and what did you learn from the experience? (Word limit: 200-400 words. Response must be written in English.
+
+ANSWER:
+As a passionate soccer fan from a young age, my dream was always to become a professional player. This ambition seemed within reach when, at 15, I was selected to play in the U-17 team at the international CBSE clusters tournament—an event where high schools across all Asian CBSE board institutions compete. It was a significant achievement as I was to start among older, more experienced players. However, just three days before our tournament opener, I suffered a major setback: a knee ligament tear followed by septic arthritis. This not only dashed my immediate hopes of competing but also left me hospitalized and bedridden for eight to nine months, facing a grueling recovery process.
+
+The initial prognosis was disheartening; doctors advised that I might never regain the ability to play or move as freely as before. The physical pain of the injury and subsequent arthritis was daunting, but the emotional and psychological impact of potentially losing my ability to play soccer was even more challenging to overcome. Faced with this reality, I had two choices: to accept the doctors' predictions or to fight back with relentless determination.
+
+I chose the latter. The road to recovery involved relearning basic physical activities—from taking steps to eventually running. Each phase of rehabilitation required immense patience and perseverance. I adhered strictly to physical therapy routines and gradually incorporated strength training and conditioning exercises. Beyond physical recovery, I also had to build mental resilience, maintaining a positive outlook despite the setbacks.
+
+Four years later, not only had I made a full recovery, but I also went on to represent my university's soccer team at various national and state-level tournaments, securing several accolades. This journey from a hospital bed to the soccer field taught me the profound lessons of patience, hard work, and mental toughness.
+
+This experience profoundly impacted me, shifting my perspective on challenges and what it means to overcome them. It reinforced the idea that setbacks, however devastating, are not final. The lessons learned from this period of my life have been instrumental in shaping my approach to facing challenges in all areas, teaching me that with determination and the right support, it's possible to overcome even the most daunting obstacles.
